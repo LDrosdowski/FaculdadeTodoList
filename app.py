@@ -1,10 +1,5 @@
-from flask import Flask, render_template, request, redirect, jsonify
-import requests as rs # requisições http
-import json # formatação e manipulação do JSON
-import base64 # conversão base64
-import io # manipulação de entrada e saída
-from matplotlib import pyplot as plt # biblioteca gráfica
-import matplotlib.image as mpimg # biblioteca gráfica
+from flask import Flask, render_template, request, redirect
+import requests as rs
 
 app = Flask(__name__)
 
@@ -25,7 +20,7 @@ def login():
         'password': password
     }
 
-    response = requests.post(api_url + '/auth', json=login_data)
+    response = rs.post(api_url + '/auth', json=login_data)
     data = response.json()
 
     if 'token' in data:
@@ -44,7 +39,7 @@ def signup():
         'password': password
     }
 
-    response = requests.post(api_url + '/signup', json=signup_data)
+    response = rs.post(api_url + '/signup', json=signup_data)
     data = response.json()
 
     if 'token' in data:
@@ -61,7 +56,7 @@ def tasks():
         'Authorization': 'Bearer ' + token
     }
 
-    response = requests.get(api_url + '/tasks', headers=headers)
+    response = rs.get(api_url + '/tasks', headers=headers)
     data = response.json()
 
     tasks = data.get('tasks', [])
