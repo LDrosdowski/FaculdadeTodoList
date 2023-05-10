@@ -1,16 +1,16 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session
 import requests as rs
 
 app = Flask(__name__)
 
 # URL da API
-api_url = 'https://localhost:8000'
+api_url = 'https://todolist-api.edsonmelo.com.br'
 
-@app.route('/')
+@app.route('/login')
 def index():
     return render_template('login.html')
 
-@app.route('/login', methods=['POST'])
+@app.route('/login', methods=['GET','POST'])
 def login():
     username = request.form['username']
     password = request.form['password']
@@ -20,36 +20,60 @@ def login():
         'password': password
     }
 
-    response = rs.post(api_url + '/auth', json=login_data)
-    data = response.json()
+    headers = {
+        'Content-Type': 'application/json'
+    }
 
-    if 'token' in data:
-        return redirect('/tasks?token=' + data['token'])
+    response = rs.post(api_url + '/api/user/login/', json=login_data, headers=headers)
+    status = response.json()
+    token = status['token']
+    session['token'] = token
+
+    if 'token' in status:
+        redirect ('tasksPage')
     else:
-        error = data.get('error', 'Erro de autenticação')
+        error = status.get('error', 'Erro de autenticação')
         return render_template('login.html', error=error)
+
+@app.route('/signup', methods=['GET'])
+def signupPage():
+    return render_template('signup.html')
 
 @app.route('/signup', methods=['POST'])
 def signup():
+    name = request.form['name']
+    email = request.form['email']
     username = request.form['username']
     password = request.form['password']
 
     signup_data = {
+        'name': name,
+        'email': email,
         'username': username,
         'password': password
     }
 
-    response = rs.post(api_url + '/signup', json=signup_data)
-    data = response.json()
+    headers = {
+        'Content-Type': 'application/json'
+    }
 
-    if 'token' in data:
-        return redirect('/tasks?token=' + data['token'])
+    response = rs.post(api_url + '/api/user/new/', json=signup_data, headers=headers)
+    status = response.json()
+    message = status['message']
+
+    if message == "User Successfully Added":
+        success = status.get('success', 'User Successfully Added')
+        return render_template('signup.html', success=success)
     else:
-        error = data.get('error', 'Erro ao criar conta')
+        error = status.get('error', 'User Already Exists')
         return render_template('signup.html', error=error)
 
+@app.route('/tasks/list', methods=['GET'])
+def tasksPage():
+    return render_template('list.html')
+
 @app.route('/tasks')
-def tasks():
+def newTask():
     token = request.args.get('token')
 
     headers = {
