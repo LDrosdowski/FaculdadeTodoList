@@ -1,16 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Exclua a tarefa</title>
+  <title>Delete task</title>
   <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
   <div class="container">
-    <h1>Lista de Tarefas</h1>
-    <form id="delete-task">
-      <input type="text" id="delete-input" placeholder="Digite o número da tarefa">
-      <button type="submit">Salvar</button>
+    <h1>Delete task</h1>
+    <form id="delete-task" action="{{url_for('deleteTask')}}" method="DELETE">
+      <input type="text" name="taskId" id="taskId" placeholder="Task id">
+      <input id="submit" type="submit" value="Delete"></button> 
+      <div>
+        <p bold>{{success}} {{error}}</p>
+       </div> 
     </form>
+    <div>
+      <a href="{{url_for('tasksPage')}}">
+        <button type="button">Back</button>
+      </a>
+    </div>
   </div>
 
 </body>

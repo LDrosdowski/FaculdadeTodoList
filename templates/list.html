@@ -1,22 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
+  <meta charset="UTF-8">
   <title>Lista de Tarefas</title>
-  <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
   <div class="container">
-    <h1>Lista de Tarefas</h1>
-    <form id="todo-form">
-      <input type="text" id="todo-input" placeholder="Digite uma tarefa">
-      <button type="submit">Adicionar</button>
+    <h1>Todo list</h1>
+    <form id="todo-form" action="{{url_for('newTask')}}" method="POST">
+      <div>
+        <input name="taskName" type="text" id="todo-input" placeholder="Task name">
+      </div>
+      <div>
+        <input id="submit" type="submit" value="Submit">
+      </div>
+      <div>
+        <p bold>{{success}} {{error}}</p>
+    </div>
     </form>
-    <ul id="todo-list">
-      <!-- Aqui as tarefas serão adicionadas dinamicamente -->
-    </ul>
+    <div>
+        <a href="{{url_for('deleteTaskPage')}}">
+          <button type="button">Delete task</button>
+        </a>
+        <a href="{{url_for('editTaskPage')}}">
+          <button type="button">Edit task</button>
+        </a>
+    </div>
+    <div>
+      <ul id="todo-list">
+        <!-- Aqui as tarefas serão adicionadas dinamicamente -->
+      </ul>
+    </div>
   </div>
 
-  <script src="script.js"></script>
+  <!-- <script src="script.js"></script> -->
 </body>
 </html>
     

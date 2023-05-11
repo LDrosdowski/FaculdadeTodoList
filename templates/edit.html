@@ -1,17 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Edite sua tarefa</title>
+  <title>Edit task</title>
   <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
   <div class="container">
     <h1>Lista de Tarefas</h1>
-    <form id="delete-task">
-      <input type="text" id="delete-input" placeholder="Digite o número da tarefa"><br>
-      <input type="text" id="delete-input" placeholder="Digite a nova tarefa">
-      <button type="submit">Excluir</button>
+    <form id="updateTask" action="{{url_for('editTask')}}" method="PUT">
+      <input type="text" id="taskId" name="taskId" placeholder="Task id"><br>
+      <input type="text" id="name" name="name" placeholder="Task name"><br>
+      <input type="text" id="realized" name="realized" placeholder="Realized"><br>
+      <input id="submit" type="submit" value="Save"></button>
+      <div>
+        <p bold>{{success}} {{error}}</p>
+      </div>
     </form>
+    <div>
+      <a href="{{url_for('tasksPage')}}">
+        <button type="button">Back</button>
+      </a>
+    </div>
   </div>
 
 </body>
