@@ -1,0 +1,56 @@
+body {
+    margin: 0px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+}
+
+form {
+margin-bottom: 20px;
+}
+
+input[type="text"]{
+    width: 100%;
+    padding:10px;
+    font-size: 16px;
+    border: 1.2px solid;
+    border-radius: 5px;
+}
+
+button{
+    display: block;
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+
+}
+
+button:hover {
+    background-color: green;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin-botton: 10px;
+}
+
+li input [type="checkbox"] {
+    margin-right: 10px;
+}
